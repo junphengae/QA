@@ -57,7 +57,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
-<% 
+<%
 	String cus_id =WebUtils.getReqString(request,"cus_id"); 
 	String id =WebUtils.getReqString(request,"id"); 
 	String cus_update =WebUtils.getReqString(request,"upadate"); 
@@ -87,6 +87,43 @@ List listPvrM = BmpProvinceTS.SelectThailandProvince();
 Iterator<BmpProvinceBean> itePvrM = listPvrM.iterator();
 List listPV = BmpProvinceTS.SelectThailandProvince();
 Iterator<BmpProvinceBean> itr_pv = listPV.iterator();
+
+boolean corporate = false;
+System.out.println(status+"-"+corporate);
+if( (!entity.getForewordname().equalsIgnoreCase("นาย"))
+		&& (!entity.getForewordname().equalsIgnoreCase("นาง")) 
+		&& (!entity.getForewordname().equalsIgnoreCase("นางสาว")) 
+		&& (!entity.getForewordname().equalsIgnoreCase("")))
+{
+	//นิติบุคคล
+	corporate = true;
+}else{
+	
+	corporate = false;
+}
+ //System.out.println(status+"-"+corporate);
+	if(status.equalsIgnoreCase("forward")){
+		if(corporate){
+			//นิติบุคคล
+		entity.setV_plate("");
+		entity.setV_plate_province_cd("");
+		entity.setBrand_id("");
+		entity.setModel_id("");
+		entity.setCus_surname("");			
+			repair.setDriven_by("");		
+			repair.setDriven_contact("");
+			repair.setMile("");
+			repair.setDue_date(null);
+			repair.setProblem("");
+			repair.setNote("");
+		}else{
+			repair.setMile("");
+			repair.setDue_date(null);
+			repair.setProblem("");
+			repair.setNote("");
+		}
+	}
+
 %>
 
 <script type="text/javascript">
@@ -666,7 +703,7 @@ function del_condition(id,con_number){
 										<tr>
 											<td width="45%"><label title="ชื่อผู้ที่นำรถมา"><Strong>ชื่อผู้ติดต่อ</Strong></label></td>
 											<td width="5%">:</td>
-											<td width="50%"><input type="text" class="txt_box s150" name="driven_by" autocomplete="off" value="<%=(repair.getDriven_by().length()>0)?repair.getDriven_by():entity.getCus_name()%>"></td>
+											<td width="50%"><input type="text" class="txt_box s150" name="driven_by" autocomplete="off" value="<%=status.equalsIgnoreCase("forward")?"":((repair.getDriven_by().length()>0)?repair.getDriven_by():entity.getCus_name())%>"></td>
 										</tr>
 										<tr>
 											<td><label title="เบอร์โทรศัพท์"><Strong>เบอร์โทรศัพท์</Strong></label></td>

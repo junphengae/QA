@@ -12,40 +12,40 @@
     <param-name>img_path_personal</param-name>
     <!-- <param-value>E:/var/www/vhosts/part2day.com/bitmapsolution/images/motoshop/personal</param-value>  -->
     <!--  <param-value>/var/www/vhosts/part2day.com/bitmapsolution/images/motoshop/personal</param-value> -->
-     <param-value>/var/www/vhosts/infoman.asia/home/demo/personal</param-value>
+     <param-value>/var/www/vhosts/infoman.asia/home/test/personal</param-value>
      
   </context-param>
   <context-param>
     <param-name>img_path_part</param-name>
   <!--  <param-value>E:/var/www/vhosts/part2day.com/bitmapsolution/images/dc/part</param-value>  -->
   <!--  <param-value>/var/www/vhosts/part2day.com/bitmapsolution/images/dc/par</param-value> -->
-     <param-value>/var/www/vhosts/infoman.asia/home/demo/part</param-value>
+     <param-value>/var/www/vhosts/infoman.asia/home/test/part</param-value>
   </context-param>
   <context-param>
   	<param-name>img_path_barcode</param-name>
   	<!-- <param-value>E:/var/www/vhosts/part2day.com/bitmapsolution/images/dc/barcode</param-value> -->
   <!--  <param-value>/var/www/vhosts/part2day.com/bitmapsolution/images/dc/barcode</param-value> -->
-    <param-value>/var/www/vhosts/infoman.asia/home/demo/barcode</param-value>
+    <param-value>/var/www/vhosts/infoman.asia/home/test/barcode</param-value>
   </context-param>
 	<context-param>
   		<param-name>path_report</param-name>
     	<!-- <param-value>E:/var/www/vhosts/part2day.com/bitmapsolution/images/dc/report</param-value>  -->
     	<!-- <param-value>/var/www/vhosts/part2day.com/bitmapsolution/images/motoshop/report</param-value> -->
-    	<param-value>/var/www/vhosts/infoman.asia/home/demo/report</param-value>
+    	<param-value>/var/www/vhosts/infoman.asia/home/test/report</param-value>
     	
     </context-param>
   
   <context-param>
 	<param-name>car_logo</param-name>
    <!--  <param-value>D:/var/www/vhosts/part2day.com/bitmapsolution/images/dc/car_logo</param-value> -->
-   <param-value>/var/www/vhosts/infoman.asia/home/demo/car_logo</param-value> 
+   <param-value>/var/www/vhosts/infoman.asia/home/test/car_logo</param-value> 
     
   </context-param>
   
   <context-param>
     <param-name>local_path_inventory</param-name>
    <!--  <param-value>/var/www/vhosts/part2day.com/bitmapsolution/images/dc/inventory</param-value>     -->
-    <param-value>/var/www/vhosts/infoman.asia/home/demo/inventory</param-value>    
+    <param-value>/var/www/vhosts/infoman.asia/home/test/inventory</param-value>    
   </context-param>
 	<servlet>
 		<description>

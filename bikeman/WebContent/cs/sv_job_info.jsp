@@ -105,11 +105,11 @@ if( (!entity.getForewordname().equalsIgnoreCase("นาย"))
 	if(status.equalsIgnoreCase("forward")){
 		if(corporate){
 			//นิติบุคคล
-			entity.setV_plate("");
-			entity.setV_plate_province_cd("");
-			entity.setBrand_id("");
-			entity.setModel_id("");
-			entity.setCus_surname("");			
+		entity.setV_plate("");
+		entity.setV_plate_province_cd("");
+		entity.setBrand_id("");
+		entity.setModel_id("");
+		entity.setCus_surname("");			
 			repair.setDriven_by("");		
 			repair.setDriven_contact("");
 			repair.setMile("");

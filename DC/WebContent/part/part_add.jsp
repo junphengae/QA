@@ -23,6 +23,8 @@
 <link href="../css/loading.css" rel="stylesheet" type="text/css" media="all">
 <link href="../css/table.css" rel="stylesheet" type="text/css" media="all">
 
+<script src="../js/validator.js"></script>
+
 <%@ taglib uri="/WEB-INF/lib/customtag.tld" prefix="bmp" %>
 <jsp:useBean id="securProfile" class="com.bitmap.security.SecurityProfile" scope="session"></jsp:useBean>
 
@@ -164,6 +166,21 @@
 			return false;
 		});
 	});
+	
+	/*  onkeyUp  validate Number  */
+	function validCurrencyOnKeyUp(thisObj, thisEvent) {
+		  var temp = thisObj.value;
+		  temp = currencyToNumber(temp); // convert to number
+		  thisObj.value = formatCurrency(temp);// convert to currency forma
+		
+	}
+
+	function validNumberOnKeyUp(thisObj, thisEvent) {
+		  var temp = thisObj.value;
+		  temp = currencyToNumber(temp); // convert to number
+		  thisObj.value = formatIntegerWithComma(temp);// convert to currency format
+	}
+	
 </script>
 </head>
 <body>
@@ -286,7 +303,7 @@
 							<tr height="20px">
 								<td><Strong>Price</Strong></td>
 								<td align="left">: 
-									<input type="text" autocomplete="off" name="price" id="price" maxlength="10" class="s80 txt_box " >  <!-- onblur="$(this).val(addCommas($(this).val()));" -->
+									<input type="text" autocomplete="off" name="price" id="price" maxlength="10" class="s80 txt_box " onchange="return validCurrencyOnKeyUp(this, event)" >  <!-- onblur="$(this).val(addCommas($(this).val()));" -->
 									<snc:ComboBox name="price_unit" styleClass="txt_box s50" listData="<%=PartMaster.unitList()%>"></snc:ComboBox>
 								</td>
 							</tr>
@@ -294,7 +311,7 @@
 							<tr height="20px">
 								<td><Strong>Cost</Strong></td>
 								<td align="left">: 
-									<input type="text" autocomplete="off" maxlength="10" name="cost" id="cost" class="s80 txt_box" > <!-- onblur="$(this).val(addCommas($(this).val()));" -->
+									<input type="text" autocomplete="off" maxlength="10" name="cost" id="cost" class="s80 txt_box" onchange="return validCurrencyOnKeyUp(this, event)" > <!-- onblur="$(this).val(addCommas($(this).val()));" -->
 									<snc:ComboBox name="cost_unit" styleClass="txt_box s50" listData="<%=PartMaster.unitList()%>"></snc:ComboBox>
 								</td>
 							</tr>

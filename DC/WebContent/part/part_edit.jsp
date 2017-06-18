@@ -21,6 +21,8 @@
 <link href="../css/loading.css" rel="stylesheet" type="text/css" media="all">
 <link href="../css/table.css" rel="stylesheet" type="text/css" media="all">
 
+<script src="../js/validator.js"></script>
+
 <%@ taglib uri="/WEB-INF/lib/customtag.tld" prefix="bmp" %>
 
 <jsp:useBean id="securProfile" class="com.bitmap.security.SecurityProfile" scope="session"></jsp:useBean>
@@ -164,6 +166,20 @@
 		
 		
 	});
+	
+	/*  onkeyUp  validate Number  */
+	function validCurrencyOnKeyUp(thisObj, thisEvent) {
+		  var temp = thisObj.value;
+		  temp = currencyToNumber(temp); // convert to number
+		  thisObj.value = formatCurrency(temp);// convert to currency forma
+		
+	}
+
+	function validNumberOnKeyUp(thisObj, thisEvent) {
+		  var temp = thisObj.value;
+		  temp = currencyToNumber(temp); // convert to number
+		  thisObj.value = formatIntegerWithComma(temp);// convert to currency format
+	}
 </script>
 </head>
 <body>
@@ -275,14 +291,14 @@
 			<tr>
 				<td><Strong>Price</Strong></td>
 				<td align="left">: 
-					<input type="text" autocomplete="off" name="price" id="price" class="txt_box s80" value="<%=entity.getPrice()%>" onblur="$(this).val(addCommas($(this).val()));"> 
+					<input type="text" autocomplete="off" name="price" id="price" class="txt_box s80" value="<%=entity.getPrice()%>" onblur="$(this).val(addCommas($(this).val()));" onchange="return validCurrencyOnKeyUp(this, event)"> 
 					<bmp:ComboBox name="price_unit" styleClass="txt_box s40" listData="<%=PartMaster.unitList()%>" value="<%=entity.getPrice_unit()%>"></bmp:ComboBox>
 				</td>
 			</tr>
 			<tr>
 				<td><Strong>Cost</Strong></td>
 				<td align="left">: 
-					<input type="text" autocomplete="off" name="cost" id="cost" class="txt_box s80" value="<%=entity.getCost()%>" onblur="$(this).val(addCommas($(this).val()));"> 
+					<input type="text" autocomplete="off" name="cost" id="cost" class="txt_box s80" value="<%=entity.getCost()%>" onblur="$(this).val(addCommas($(this).val()));" onchange="return validCurrencyOnKeyUp(this, event)"> 
 					<bmp:ComboBox name="cost_unit" styleClass="txt_box s40" listData="<%=PartMaster.unitList()%>" value="<%=entity.getCost_unit()%>"></bmp:ComboBox>
 				</td>
 			</tr>

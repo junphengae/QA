@@ -263,7 +263,7 @@ public class ServiceSale {
 			 String DMY =Y+yy[1];
 			 String bill=""; 
 			 int number;
-				String sql = "SELECT count(*) 	AS number  FROM  `service_sale` WHERE  `bill_id` LIKE  '%"+DMY+"%'";
+				String sql = "SELECT count(*) 	AS number  FROM  service_sale WHERE  bill_id LIKE  '"+DMY+"%'";
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery(sql);
 				

@@ -214,7 +214,10 @@
 				if(reporttype == "job_sale_detail"){
 					 window.popupReport('job_report_sale_detail.jsp?'+data,'1000','700'); 
 					//window.popupReport('job_report_sale_detail_new.jsp?'+data,'1000','700');
-				}
+				}else
+					if(reporttype == "job_sale_bill"){
+						window.popupReport('job_report_sale_bill.jsp?'+data,'1000','700');
+					}
 				 
 				
 			 
@@ -324,9 +327,11 @@
 				if(reporttype == "job_sale_detail"){
 					window.popupReport('job_report_sale_detail.jsp?'+data,'1000','700');
 					//window.popupReport('job_report_sale_detail_new.jsp?'+data,'1000','700');
-				}
-				
-				
+				}else
+					if(reporttype == "job_sale_bill"){
+						window.popupReport('job_report_sale_bill.jsp?'+data,'1000','700');
+					}
+								
 			});
 						
 			var tr_repair_type = $('#tr_repair_type');
@@ -377,7 +382,30 @@
 						}
 			        }					
 					
-				}else	
+				}else
+					if( $(this).val() == "job_sale_bill" ){
+						tr_repair_type.show();
+						tr_job_number.show();
+						tr_status.hide();
+						tr_type_time.show();
+						if( $('#tr_type_time #rd_time').is(":checked") ){ 
+				            var val = $('input:radio[Name=rd_time]:checked').val(); 
+				            if(val == '1'){
+					            $('#tr_date').show();
+					            $('#tr_date_date').hide();
+					            $('#tr_month').hide();
+				            }else if (val == '2') {
+				            	$('#tr_date').hide();	
+					            $('#tr_date_date').show();
+					            $('#tr_month').hide();	
+							}else if (val == '3') {
+								$('#tr_date').hide();	
+					            $('#tr_date_date').hide();
+					            $('#tr_month').show();
+							}
+				        }					
+						
+				}else
 				if( $(this).val() == "job_part_not_sale" ){
 					tr_repair_type.hide();
 					tr_job_number.hide();
@@ -474,14 +502,14 @@
 									<bmp:ComboBox name="report_type"  styleClass="txt_box s200" value="">
 										<bmp:option value="0"  text="--------  กรุณาเลือก -------"></bmp:option>
 										<bmp:option value="job_sale" text="รายงานการขาย"></bmp:option>
+										<bmp:option value="job_sale_bill" text="รายงานใบเสร็จฉบับเต็ม"></bmp:option>
 										<bmp:option value="job_sale_detail" text="รายงานการขายสรุปรวม"></bmp:option>
 										<bmp:option value="job_part" text="รายงานสินค้าที่ขาย"></bmp:option>
 										<bmp:option value="job_service" text="รายงานการขายบริการ"></bmp:option>
 										<bmp:option value="job_other" text="รายงานการขายอื่นๆ"></bmp:option>
 										<bmp:option value="job_good_sale" text="รายงานการสินค้าขายดี"></bmp:option>
 										<bmp:option value="job_part_sum" text="รายงานสรุปสินค้าที่ขาย"></bmp:option>
-										<bmp:option value="job_part_not_sale" text="รายงานสรุปสินค้าที่ไม่ได้ขาย"></bmp:option>
-										
+										<bmp:option value="job_part_not_sale" text="รายงานสรุปสินค้าที่ไม่ได้ขาย"></bmp:option>										
 									</bmp:ComboBox>
 								</td>
 							</tr>	

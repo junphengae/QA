@@ -174,6 +174,119 @@ public class jobTS {
 			return list;
 		}
 }
+	@SuppressWarnings("finally")
+	public static List<serviceInfoBean> list_serviceBillInfo(List<String[]> params) throws SQLException{
+		Connection conn = DBPool.getConnection();
+		Statement st = null;
+		ResultSet rs = null;
+		List<serviceInfoBean>  list = new ArrayList<serviceInfoBean>();
+
+		String WHERE = "";
+		String start_date = "";
+		String end_date = "";
+		String status  ="";
+		Iterator<String[]> ite = params.iterator();
+		while (ite.hasNext()) {
+			String[] str = (String[]) ite.next();
+			if (str[1].length() > 0) {
+				if (str[0].equalsIgnoreCase("report_job_startdate")){
+					start_date = str[1];
+				}else if (str[0].equalsIgnoreCase("report_job_enddate")){
+					end_date = str[1];
+				}else if (str[0].equalsIgnoreCase("report_job_status")){
+					WHERE +=" AND SS.status =  '"+str[1] +"' ";
+					status = str[1];
+				}else 
+					if (str[0].equalsIgnoreCase("date")){						
+						if (status.equalsIgnoreCase("12")) {		
+							WHERE +=" AND DATE_FORMAT(SS.create_date,'%d-%m-%Y')  = '"+str[1].trim() +"'  ";	
+						}else {							
+							WHERE +=" AND DATE_FORMAT(SS.job_close_date,'%d-%m-%Y')  = '"+str[1].trim() +"'  ";	
+						}
+				}else
+					if (str[0].equalsIgnoreCase("report_job_month")){
+						if (status.equalsIgnoreCase("12")) {
+						WHERE +=" AND MONTH(SS.create_date)  = '"+str[1] +"'  ";	
+						}else{
+						WHERE +=" AND MONTH(SS.job_close_date)  = '"+str[1] +"'  ";
+						}
+				}else 
+					if (str[0].equalsIgnoreCase("report_job_month_year")){
+				    if (status.equalsIgnoreCase("12")) {
+					WHERE +=" AND YEAR(SS.create_date)  = '"+str[1] +"'  ";	
+					}else{
+					WHERE +=" AND YEAR(SS.job_close_date)  = '"+str[1] +"'  ";
+					}
+				}else 
+					if (str[0].equalsIgnoreCase("report_job_year")){
+				    if (status.equalsIgnoreCase("12")) {
+					WHERE +=" AND YEAR(SS.create_date)  = '"+str[1] +"'  ";	
+					}else{
+					WHERE +=" AND YEAR(SS.job_close_date)  = '"+str[1] +"'  ";
+					}
+				}else if (str[0].equalsIgnoreCase("report_job_id")){
+					WHERE +=" AND SS.id =  '"+str[1] +"' ";
+				}else if (str[0].equalsIgnoreCase("repair_type")){
+					WHERE +=" AND SR.repair_type =  '"+str[1] +"' ";
+				}
+			}
+		}
+		
+		
+		if(start_date.length()>0 &&  end_date.length()>0){
+			String start_end_date[] = null;
+			start_end_date = start_date.split("-");
+			start_date = start_end_date[2]+"-"+start_end_date[1]+"-"+start_end_date[0];
+			start_end_date = end_date.split("-");
+			end_date = start_end_date[2]+"-"+start_end_date[1]+"-"+start_end_date[0];
+			
+			if (status.equalsIgnoreCase("12")) {
+				WHERE +=" AND DATE_FORMAT(SS.create_date,'%Y-%m-%d') BETWEEN  '"+start_date +"' AND  '"+end_date+"'  ";
+			}else {
+				WHERE +=" AND DATE_FORMAT(SS.job_close_date,'%Y-%m-%d') BETWEEN  '"+start_date +"' AND  '"+end_date+"'  ";
+			}
+		}
+		
+		
+		String query = "";
+		query += "SELECT ";
+		query += "  	SS.id AS job_id, ";
+		query += "  	SS.cus_name AS name,  ";
+		query += " 	    SS.cus_surname AS surname, ";			
+		query += "  	SS.status AS status, ";
+		query += "  	SS.create_by AS  create_by,  " ;
+		query += "  	SS.job_close_date AS job_close_datetime , ";
+		query += "  	SS.create_date AS create_date_time , ";
+		query += "  	DATE_FORMAT(SS.create_date, '%Y-%m-%d') AS create_date, ";
+		query += "  	DATE_FORMAT(SS.job_close_date, '%Y-%m-%d') AS job_close,  ";		
+		query += "  	SS.bill_id AS bill_id  " ;		
+		query += " FROM "+table_service_sale+" AS SS  ";		
+		query += " LEFT JOIN "+table_service_repair+" AS SR ON SR.id = SS.id ";
+		query += " WHERE SS.bill_id IS NOT NULL AND SS.bill_id <> ''   ";
+		query += WHERE;
+		query += " ORDER BY (SS.id *1) , SS.bill_id";
+	
+		System.out.println("query::"+query);
+		
+		
+		try{
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			while(rs.next()){
+				serviceInfoBean service_bean = new serviceInfoBean();
+				DBUtility.bindResultSet(service_bean, rs);
+				list.add(service_bean);			
+			}
+		}catch (Exception e) {
+			throw new Exception( e.getMessage() );
+		}finally{
+			rs.close();
+			st.close();
+			conn.close();
+			return list;
+		}
+	}
+	
 	public static List<serviceInfoBean> list_serviceInfo_report(List<String[]> params) throws SQLException{
 			Connection conn = DBPool.getConnection();
 			Statement st = null;
